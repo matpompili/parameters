@@ -22,30 +22,28 @@ class Parameters(Addict):
 
     def __init__(self, yaml_folder: Union[str, pathlib.Path]):
         super().__init__()
+        
         if isinstance(yaml_folder, str):
             yaml_folder = pathlib.Path(yaml_folder)
-        self._yaml_folder : pathlib.Path = yaml_folder
-        self._did_load : bool = False
 
-    def load(self):
+        self._load(yaml_folder)
+
+
+    def _load(self, yaml_folder: pathlib.Path):
         """Load parameters into the object by parsing the yaml files.
 
         Raises:
             FileNotFoundError: the folder containing the yaml files does not exist.
         """
-        _logger.info("Loading parameters from file")
-
         yaml = YAML()
 
-        if self._yaml_folder.exists():
-            for file in self._yaml_folder.glob("*.yaml"):
-                with open(file, "r", encoding="UTF-8") as file_handle:
-                    loaded_dict = yaml.load(file_handle)
-                    file_name = file.name.removesuffix(".yaml")
-                    if loaded_dict is not None:
-                        self.__setattr__(file_name, yaml.load(file_handle))
+        if yaml_folder.exists():
+            for suffix in ["yaml", "yml"]:
+                for file in yaml_folder.glob(f"*.{suffix}"):
+                    file_name = file.with_suffix("").name
+                    with open(file, "r", encoding="UTF-8") as file_handle:
+                        loaded_dict = yaml.load(file_handle)
+                        if loaded_dict is not None:
+                            self.__setattr__(file_name, Addict(loaded_dict))
         else:
-            raise FileNotFoundError()
-
-        self._did_load = True
-
+            raise FileNotFoundError(f"The folder {yaml_folder} does not exist.")
