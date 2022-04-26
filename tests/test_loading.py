@@ -1,7 +1,7 @@
 """Test correct loading of the yaml file into the Parameters class."""
 import subprocess
 import unittest
-from typing import Any, Optional
+from typing import Optional
 
 from addict import Addict
 
@@ -17,7 +17,7 @@ class TestLoadingParameters(unittest.TestCase):
         "tests/test_yaml_folder/group_b.yml",
     ]
 
-    def setUp(self) -> None:
+    def setUp(self):
         self.parameters: Parameters = Parameters(
             yaml_folder="tests/test_yaml_folder", auto_load=False
         )
@@ -26,7 +26,7 @@ class TestLoadingParameters(unittest.TestCase):
         self.assertTrue(self.parameters._successful_load)
         self.assertIsNotNone(self.parameters)
 
-    def tearDown(self) -> None:
+    def tearDown(self):
         self.parameters = None
         self.assertIsNone(self.parameters)
         for file in self.files_involved:
