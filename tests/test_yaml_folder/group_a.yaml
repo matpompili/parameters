@@ -12,5 +12,5 @@ a_dictionary:
   third_key: third
 a_deep_dict:
   with_several:
-    layers: !
+    layers: works!
 a_list: [0, 1, 2, 3]
