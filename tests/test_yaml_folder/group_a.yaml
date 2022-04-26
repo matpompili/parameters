@@ -10,4 +10,7 @@ a_dictionary:
   first_key: first
   second_key: second
   third_key: third
+a_deep_dict:
+  with_several:
+    layers: !
 a_list: [0, 1, 2, 3]
