@@ -4,7 +4,7 @@ Matteo Pompili, 2022
 """
 
 import pathlib
-from typing import List, Union
+from typing import Any, Dict, List, MutableMapping, Union
 
 from addict import Addict
 from ruamel.yaml import YAML
@@ -55,7 +55,6 @@ class Parameters:
 
     def __repr__(self) -> str:
         """Return a string representation of the object."""
-
         if self._successful_load:
             return str(
                 f'Parameters object, loading from "{self._yaml_folder}":\n'
@@ -63,3 +62,40 @@ class Parameters:
             )
         else:
             return f"Parameters object, did not load yaml folder yet."
+
+    @staticmethod
+    def _flatten_dict_gen(
+        dict_to_flatten: MutableMapping[str, Any], parent_key: str, separator: str
+    ):
+        """https://www.freecodecamp.org/news/how-to-flatten-a-dictionary-in-python-in-4-different-ways/"""
+        for k, v in dict_to_flatten.items():
+            new_key = parent_key + separator + k if parent_key else k
+            if isinstance(v, MutableMapping):
+                yield from Parameters._flatten_dict(
+                    v, new_key, separator=separator
+                ).items()
+            else:
+                yield new_key, v
+
+    @staticmethod
+    def _flatten_dict(
+        dict_to_flatten: MutableMapping, parent_key: str = "", separator: str = "."
+    ) -> Dict[str, Any]:
+        """https://www.freecodecamp.org/news/how-to-flatten-a-dictionary-in-python-in-4-different-ways/"""
+        return dict(
+            Parameters._flatten_dict_gen(dict_to_flatten, parent_key, separator)
+        )
+
+    def serialize(self) -> Dict[str, Any]:
+        """Return the parameters as a dictionary of depth one.
+
+        Example:
+            >>> pars.serialize()
+            { 'group_a.a_int': 1,
+              'group_a.a_float': 1.0,
+              'group_a.a_bool': True,
+              'group_a.a_dictionary.first_key': 'first',
+              'group_a.a_dictionary.second_key': 'second',
+            ...
+        """
+        return Parameters._flatten_dict(self.__dict__)
