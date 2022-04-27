@@ -5,7 +5,7 @@ from typing import Optional
 
 from addict import Addict
 
-from parameters import Parameters
+from yamlpars import Parameters
 
 
 class TestLoadingParameters(unittest.TestCase):

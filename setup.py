@@ -4,10 +4,10 @@ with open("requirements.txt") as installation_requirements_file:
     requirements = installation_requirements_file.read().splitlines()
 
 setup(
-    name="parameters",
+    name="yamlpars",
     version="0.2.0",
-    packages=["parameters"],
-    url="https://github.com/matpompili/parameters",
+    packages=["yamlpars"],
+    url="https://github.com/matpompili/yamlpars",
     author="Matteo Pompili",
     classifiers=[
         "Programming Language :: Python",

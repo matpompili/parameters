@@ -4,7 +4,7 @@ target-version = ['py38']
 [tool.isort]
 profile = "black"
 multi_line_output = 3
-src_paths = ["parameters", "test"]
+src_paths = ["yamlpars", "test"]
 
 [tool.mypy]
 warn_return_any = true
