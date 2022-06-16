@@ -5,7 +5,7 @@ with open("requirements.txt") as installation_requirements_file:
 
 setup(
     name="yamlpars",
-    version="0.2.0",
+    version="0.3.0",
     packages=["yamlpars"],
     url="https://github.com/matpompili/yamlpars",
     author="Matteo Pompili",

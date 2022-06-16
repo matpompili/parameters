@@ -17,6 +17,7 @@ warn_unused_configs = true
 [[tool.mypy.overrides]]
 module = [
     "addict",
-    "ruamel.yaml"
+    "ruamel.yaml",
+    "setuptools"
 ]
 ignore_missing_imports = true

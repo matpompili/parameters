@@ -7,7 +7,7 @@ from ruamel.yaml import YAML
 from .yaml_utils import lint_yaml_file
 
 
-def update_parameters(
+def update_yaml_file(
     yaml_folder: Union[str, pathlib.Path],
     file_name: str,
     update_dict: Dict[str, Any],

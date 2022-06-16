@@ -4,6 +4,7 @@ Matteo Pompili, 2022
 """
 
 import pathlib
+from operator import getitem, setitem
 from typing import Any, Dict, List, MutableMapping, Union
 
 from addict import Addict
@@ -99,3 +100,37 @@ class Parameters:
             ...
         """
         return Parameters._flatten_dict(self.__dict__)
+
+    def replace_entry(self, key: str, value: Any):
+        """Replace the value of a parameter.
+
+        Args:
+            key: the key of the parameter to replace.
+            value: the new value of the parameter.
+
+        Example:
+            >>> pars.replace_entry("group_a.a_dictionary.first_key", 'some_new_value')
+        """
+
+        split_key = key.split(".")
+
+        # First step is attr, next is items
+        head = split_key.pop(0)
+        object_ref = getattr(self, head)
+        if not isinstance(object_ref, dict):
+            raise KeyError(f"Could not find {key} in the Parameters object.")
+
+        while len(split_key) > 1:
+            head = split_key.pop(0)
+            object_ref = getitem(object_ref, head)
+            if not isinstance(object_ref, dict):
+                raise KeyError(f"Could not find {key} in the Parameters object.")
+
+        # Check that the type matches
+        last_value = getitem(object_ref, split_key[0])
+        if not issubclass(type(last_value), type(value)):
+            raise TypeError(
+                f"The type of {key} in the Parameters object. is not the same as the type of the replace value. "
+                + f"It should be {type(last_value)}, but it is {type(value)}."
+            )
+        setitem(object_ref, split_key[0], value)

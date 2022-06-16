@@ -7,7 +7,7 @@ a_int: 1  # integer, plus some nice comment
 a_float: 1.0  # float, plus some nice comment
 a_bool: true  # boolean, plus some nice comment
 a_dictionary:
-  first_key: first
+  first_key: changed!  # some comment.
   second_key: second
   third_key: third
 a_deep_dict:
