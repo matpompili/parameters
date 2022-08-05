@@ -17,7 +17,7 @@ project_urls = {
 
 setup(
     name="yamlpars",
-    version="0.3.0",
+    version="0.4.0-beta.0",
     packages=["yamlpars"],
     url="https://github.com/matpompili/yamlpars",
     author="Matteo Pompili",
