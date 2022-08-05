@@ -1,8 +1,3 @@
-"""TODO docstring
-
-Matteo Pompili, 2022
-"""
-
 import pathlib
 from operator import getitem, setitem
 from typing import Any, Dict, List, MutableMapping, Union
@@ -12,9 +7,25 @@ from ruamel.yaml import YAML
 
 
 class Parameters:
-    """TODO docstring"""
+    """The Parameters object loads the yaml files from the folder specified in the constructor,
+    and allows easy dot-notation access to the parameters, as well as an useful serialization
+    methods.
 
-    def __init__(self, yaml_folder: Union[str, pathlib.Path], auto_load: bool = True):
+    Attributes:
+        yaml_folder (str | pathlib.Path): the folder containing the yaml files.
+        auto_load (bool): if True, the yaml files are loaded automatically when
+            the object is created. The default is True.
+    Example:
+        >>> pars = Parameters("path/to/yaml/folder")
+        >>> pars.group_a.a_int
+        1
+        >>> pars.group_a.a_float
+        1.0
+    """
+
+    def __init__(
+        self, yaml_folder: Union[str, pathlib.Path], auto_load: bool = True
+    ) -> None:
         super().__init__()
         self._keys: List[str] = []
         self._yaml_folder = pathlib.Path(yaml_folder)
@@ -23,7 +34,7 @@ class Parameters:
         if auto_load:
             self.load()
 
-    def load(self):
+    def load(self) -> None:
         """Load parameters into the object by parsing the yaml files.
 
         Raises:
@@ -43,7 +54,7 @@ class Parameters:
         else:
             raise FileNotFoundError(f"The folder {self._yaml_folder} does not exist.")
 
-        yaml = None
+        del yaml
         self._successful_load = True
 
     @property
@@ -101,20 +112,27 @@ class Parameters:
         """
         return Parameters._flatten_dict(self.__dict__)
 
-    def replace_entry(self, key: str, value: Any):
+    def replace_entry(self, key: str, value: Any, type_check: bool = True) -> None:
         """Replace the value of a parameter.
 
         Args:
-            key: the key of the parameter to replace.
-            value: the new value of the parameter.
+            key (str): the key of the parameter to replace.
+            value (typing.Any): the new value of the parameter.
+            type_check (bool): if True, the type of the value is checked against the
+                type of the parameter, and an error is raised if the types do not match.
+                The default is True.
 
         Example:
             >>> pars.replace_entry("group_a.a_dictionary.first_key", 'some_new_value')
+
+        Raises:
+            KeyError: the key does not exist in the parameters.
+            TypeError: the type of the value does not match the type of the parameter.
         """
 
         split_key = key.split(".")
 
-        # First step is attr, next is items
+        # First step is attr, next is items.
         head = split_key.pop(0)
         object_ref = getattr(self, head)
         if not isinstance(object_ref, dict):
@@ -126,11 +144,11 @@ class Parameters:
             if not isinstance(object_ref, dict):
                 raise KeyError(f"Could not find {key} in the Parameters object.")
 
-        # Check that the type matches
-        last_value = getitem(object_ref, split_key[0])
-        if not issubclass(type(last_value), type(value)):
-            raise TypeError(
-                f"The type of {key} in the Parameters object. is not the same as the type of the replace value. "
-                + f"It should be {type(last_value)}, but it is {type(value)}."
-            )
+        if type_check:  # Check that the type matches the type of the parameter.
+            last_value = getitem(object_ref, split_key[0])
+            if not issubclass(type(last_value), type(value)):
+                raise TypeError(
+                    f"The type of {key} in the Parameters object. is not the same as the type of the replace value. "
+                    + f"It should be {type(last_value)}, but it is {type(value)}."
+                )
         setitem(object_ref, split_key[0], value)
