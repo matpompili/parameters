@@ -17,7 +17,7 @@ project_urls = {
 
 setup(
     name="yamlpars",
-    version="0.4.0-beta.0",
+    version="0.4.0",
     packages=["yamlpars"],
     url="https://github.com/matpompili/yamlpars",
     author="Matteo Pompili",
@@ -28,7 +28,7 @@ setup(
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    description="The yamlpars module is used to save configurations and parameters to YAML files, in a structured and easy-to use way.",
+    description="With yamlpars you can save configurations and parameters to YAML files, in a structured and easy-to use way.",
     long_description=readme,
     long_description_content_type="text/markdown",
     install_requires=requirements,
