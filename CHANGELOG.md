@@ -2,6 +2,8 @@
 
 ## [Unreleased](https://github.com/matpompili/yamlpars/tree/main)
 
+- Fix links in setup.py
+
 [Full Unreleased Changelog](https://github.com/matpompili/yamlpars/compare/v0.4.0...main)
 
 ## [v0.4.0](https://github.com/matpompili/yamlpars/tree/v0.4.0) (2022-08-04)

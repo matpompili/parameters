@@ -19,8 +19,8 @@ setup(
     name="yamlpars",
     version="0.4.1-beta.0",
     packages=["yamlpars"],
-    url="https://github.com/matpompili/yamlpars",
     author="Matteo Pompili",
+    python_requires=">=3.8",
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
