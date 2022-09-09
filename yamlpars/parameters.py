@@ -1,6 +1,6 @@
 import pathlib
 from operator import getitem, setitem
-from typing import Any, Dict, List, MutableMapping, Union
+from typing import Any, Dict, List, MutableMapping, Union, TYPE_CHECKING
 
 from addict import Addict
 from ruamel.yaml import YAML
@@ -152,3 +152,9 @@ class Parameters:
                     + f"It should be {type(last_value)}, but it is {type(value)}."
                 )
         setitem(object_ref, split_key[0], value)
+
+    # This is to make mypy happy.
+    if TYPE_CHECKING:
+        def __getattribute__(self, __name: str) -> Any:
+            """Return the value of the parameter."""
+            return super().__getattribute__(__name)
