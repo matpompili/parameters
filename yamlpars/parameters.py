@@ -1,6 +1,6 @@
 import pathlib
 from operator import getitem, setitem
-from typing import Any, Dict, List, MutableMapping, Union, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, List, MutableMapping, Union
 
 from addict import Addict
 from ruamel.yaml import YAML
@@ -155,6 +155,7 @@ class Parameters:
 
     # This is to make mypy happy.
     if TYPE_CHECKING:
+
         def __getattribute__(self, __name: str) -> Any:
             """Return the value of the parameter."""
             return super().__getattribute__(__name)
