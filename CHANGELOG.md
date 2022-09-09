@@ -2,10 +2,14 @@
 
 ## [Unreleased](https://github.com/matpompili/yamlpars/tree/main)
 
+[Full Unreleased Changelog](https://github.com/matpompili/yamlpars/compare/v0.4.1...main)
+
+## [v0.4.1](https://github.com/matpompili/yamlpars/tree/v0.4.1) (2022-09-09)
+
 - Fix links in setup.py
 - Add `__getattribute__` method to `Parameters` when type checking, to silence mypy errors.
 
-[Full Unreleased Changelog](https://github.com/matpompili/yamlpars/compare/v0.4.0...main)
+[Full v0.4.1 Changelog](https://github.com/matpompili/yamlpars/compare/v0.4.0...v0.4.1)
 
 ## [v0.4.0](https://github.com/matpompili/yamlpars/tree/v0.4.0) (2022-08-04)
 
