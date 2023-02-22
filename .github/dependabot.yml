@@ -9,3 +9,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    allow:
+      # Allow updates for Addict and Ruamel YAML
+      - dependency-name: "addict"
+      - dependency-name: "ruamel.yaml"
+      - dependency-name: "ruamel.yaml.clib"
